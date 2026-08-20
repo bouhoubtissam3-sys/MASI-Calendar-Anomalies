@@ -1,36 +1,180 @@
-# Calendar Anomalies in the Moroccan Stock Market 🇲🇦
+# Calendar Anomalies in the Moroccan Stock Market
 
-An empirical analysis of day-of-the-week (DOW) and month-of-the-year (MOY) effects in the Moroccan stock market.
+An empirical analysis of **day-of-the-week** and **month-of-the-year** effects in the Moroccan stock market over the period **2020–2025**.
+
+The project investigates whether stock returns exhibit systematic calendar patterns that could challenge the weak-form Efficient Market Hypothesis.
 
 ## 📌 Overview
-Calendar anomalies challenge the Efficient Market Hypothesis by suggesting that stock returns may exhibit predictable seasonal patterns.
+Calendar anomalies refer to recurring patterns in financial returns associated with particular days, months, or periods of the year. This project examines two common calendar effects in the Moroccan stock market:
 
-This project investigates the presence of **day-of-the-week (DOW)** and **month-of-the-year (MOY)** effects in the Moroccan stock market using daily returns from companies listed on the Casablanca Stock Exchange.
+- **Day-of-the-Week (DOW) Effect**
+- **Month-of-the-Year (MOY) Effect**
+
+The analysis uses daily returns from **15 Moroccan listed stocks** to construct an equally weighted market return and tests whether average returns vary systematically across trading days and calendar months.
+
 ## 🎯 Research Objective
-The objective is to determine whether stock returns in the Moroccan market vary systematically across:
+1. Do average stock returns differ across the days of the week?
+2. Do average stock returns differ across months of the year?
+3. Are the observed differences statistically significant after accounting for heteroskedasticity and autocorrelation?
 
-- **Days of the week** — Monday through Friday
-- **Months of the year** — January through December
 ## 📊 Data
-- **Market:** Casablanca Stock Exchange (Morocco)
-- **Sample:** 15 listed companies
-- **Period:** January 2020 – December 2025
+- **Market:** Moroccan stock market
+- **Period:** 2020–2025
 - **Frequency:** Daily
-- **Variable:** Logarithmic stock returns
-- **Sectors:** Banking, insurance, real estate, telecommunications, energy, mining, construction materials, and agri-food
+- **Number of stocks:** 15
+- **Market return:** Equally weighted average return of the selected stocks
+
+The dataset used for the analysis is located in the `data/` directory.
+
 ## 🔬 Methodology
-Daily stock prices were converted into **logarithmic returns** before conducting the analysis.
+### 1. Day-of-the-Week Effect
+Dummy variables are created for each trading day:
 
-Two regression models were estimated:
+- Monday
+- Tuesday
+- Wednesday
+- Thursday
+- Friday
 
-- **Day-of-the-Week (DOW) Effect:** Five dummy variables representing Monday through Friday.
-- **Month-of-the-Year (MOY) Effect:** Twelve dummy variables representing January through December.
+The model is estimated without an intercept so that each coefficient directly represents the average return for the corresponding trading day:
 
-Both models were estimated **without an intercept**, using **Huber–White heteroskedasticity-robust standard errors**.
-## 📈 Results
+Rt​ = βMon​ DMon,t​ + βTue​ DTue,t​ + βWed​ DWed,t​ + βThu​D Thu,t ​+ βFri​D Fri,t​ + εt​
+where:
 
-## 💡 Key Findings
+Rt = market return on day t
 
-## 🛠️ Tools
+Dj,t --> = 1 if day t corresponds to weekday j,
+     --> = 0 otherwise.
 
-## 📚 References
+and βj represents the average daily return for weekday j.
+
+
+### 2. Month-of-the-Year Effect
+
+A similar specification is estimated using twelve monthly dummy variables:
+
+Rt = βJan	​DJan,t + βFeb DFeb,t + ⋯ + βDec DDec,t + εt
+
+Or, more compactly:     Rt = ∑ βm Dm,t + εt
+
+where:
+
+Dm,t --> = 1 if observation t occurs in month m,
+     --> = 0 otherwise.
+
+and βm represents the average daily return during month m.
+
+Each coefficient therefore represents the estimated average daily return for that month.
+
+### 3. Market Return Construction
+Since the Rm_new is calculated as the row-wise mean of the 15 stock returns, we can also formally show:
+
+Rm,t = 1/N ∑ Ri,t ; with N=15, where Ri,t is the return of stock i on day t.
+
+This equation is useful because it explains exactly what the dependent variable in this DOW and MOY regressions represents.
+
+### 4. Robust Inference
+
+To account for potential violations of standard OLS assumptions in financial return data, inference is conducted using:
+
+- **HC1 heteroskedasticity-consistent standard errors**
+- **Newey–West HAC standard errors**
+
+This provides a robustness check for the statistical significance of the detected calendar patterns.
+
+## 📈 Main Results
+### Day-of-the-Week Effect
+
+Average returns differ descriptively across trading days. **Monday records a negative average return**, while the other trading days exhibit positive average returns.
+
+However, the coefficients are **not statistically significant at conventional significance levels** after robust inference.
+
+The results therefore provide **no strong statistical evidence of a day-of-the-week anomaly** during the sample period.
+
+### Month-of-the-Year Effect
+
+Monthly returns show greater descriptive variation.
+
+- **January** records a relatively high positive average return.
+- **March** records the most pronounced negative average return.
+- Several other months, particularly **May and June**, display positive average returns.
+
+Under HC1 inference, January, May, and June show marginal evidence at the 10% level. Under the more conservative Newey–West specification, only January remains marginally significant at approximately the 10% level.
+
+Overall, the evidence for a persistent month-of-the-year effect is therefore **weak rather than conclusive**.
+
+## 📊 Visualizations
+### Average Returns by Day of the Week
+
+![Average Returns by Day of the Week](figures/day_of_week_returns.png)
+
+### Average Returns by Month of the Year
+
+![Average Returns by Month of the Year](figures/month_of_year_returns.png)
+
+## 🛠️ Repository Structure
+
+```text
+MASI-Calendar-Anomalies/
+│
+├── code/
+│   └── calendar_anomalies_analysis.R
+│
+├── data/
+│   └── Finance comportementale.xlsx
+│
+├── figures/
+│   ├── day_of_week_returns.png
+│   └── month_of_year_returns.png
+│
+├── results/
+│   ├── DOW_HC1_results.csv
+│   ├── DOW_NeweyWest_results.csv
+│   ├── MOY_HC1_results.csv
+│   └── MOY_NeweyWest_results.csv
+│
+├── .gitignore
+├── LICENSE
+├── MASI_Calendar_Anomalies.Rproj
+└── README.md
+```
+
+## 📚 Reproducibility
+The complete empirical analysis is available in:
+
+```text
+code/calendar_anomalies_analysis.R
+```
+
+The script performs the workflow from data import and preparation through dummy-variable construction, econometric estimation, robust inference, result export, and visualization.
+
+### Required R Packages
+
+```r
+library(readxl)
+library(dplyr)
+library(lubridate)
+library(lmtest)
+library(sandwich)
+library(ggplot2)
+```
+
+After cloning the repository and installing the required packages, run:
+
+```r
+source("code/calendar_anomalies_analysis.R")
+```
+## 📑 Conclusion
+The analysis identifies visible differences in Moroccan stock returns across trading days and months between 2020 and 2025. However, most of these differences do not remain statistically significant once robust inference is applied.
+
+The results consequently provide **limited evidence of persistent calendar anomalies** in the selected sample, illustrating the importance of distinguishing descriptive return patterns from statistically robust market anomalies.
+
+## 🧕 Author
+**Btissam Bouhou**
+
+Master's in Finance des Marchés et Trading  
+Morocco
+
+## License
+
+This project is available under the terms specified in the repository's `LICENSE` file.
