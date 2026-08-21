@@ -191,10 +191,14 @@ The results consequently provide **limited evidence of persistent calendar anoma
 
 ## 🧕 Author
 **Btissam Bouhou**
-
 Master's in Finance des Marchés et Trading  
 Morocco
 
-## License
+## References
+Alloul, F., & Ferrouhi, E. (2025). Calendar Anomalies in African Stock Markets:
+Does the Effect of Covid-19 Pandemic Matter? *Organizations and Markets in
+Emerging Economies, 16*(1), 155–192.
+https://doi.org/10.15388/omee.2025.16.7
 
+## License
 This project is available under the terms specified in the repository's `LICENSE` file.
