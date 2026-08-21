@@ -85,6 +85,7 @@ Each coefficient therefore represents the estimated average daily return for tha
 
 ### 3. Market Return Construction
 Since the Rm_new is calculated as the row-wise mean of the 15 stock returns,the equally weighted market return is constructed as:
+
 $$
 R_{m,t}=\frac{1}{N}\sum_{i=1}^{N}R_{i,t},
 \qquad N=15
