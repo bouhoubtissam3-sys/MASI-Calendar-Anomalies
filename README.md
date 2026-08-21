@@ -84,15 +84,13 @@ and βm represents the average daily return during month m.
 Each coefficient therefore represents the estimated average daily return for that month.
 
 ### 3. Market Return Construction
-Since the Rm_new is calculated as the row-wise mean of the 15 stock returns,the equally weighted market return is constructed as:
+The equally weighted market return is constructed as:
 
 $$
 R_{m,t}=\frac{1}{N}\sum_{i=1}^{N}R_{i,t},
 \qquad N=15
 $$
 where Ri,t is the return of stock i on day t.
-
-This equation is useful because it explains exactly what the dependent variable in this DOW and MOY regressions represents.
 
 ### 4. Robust Inference
 
@@ -135,6 +133,8 @@ Overall, the evidence for a persistent month-of-the-year effect is therefore **w
 
 ## 🛠️ Repository Structure
 
+## 🛠️ Repository Structure
+
 ```text
 MASI-Calendar-Anomalies/
 │
@@ -156,7 +156,6 @@ MASI-Calendar-Anomalies/
 │
 ├── .gitignore
 ├── LICENSE
-├── MASI_Calendar_Anomalies.Rproj
 └── README.md
 ```
 
