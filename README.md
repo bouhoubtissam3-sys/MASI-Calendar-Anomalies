@@ -38,13 +38,26 @@ Dummy variables are created for each trading day:
 
 The model is estimated without an intercept so that each coefficient directly represents the average return for the corresponding trading day:
 
-Rt​ = βMon​ DMon,t​ + βTue​ DTue,t​ + βWed​ DWed,t​ + βThu​D Thu,t ​+ βFri​D Fri,t​ + εt​
+$$
+R_t =
+\beta_{\text{Mon}}D_{\text{Mon},t}
++\beta_{\text{Tue}}D_{\text{Tue},t}
++\beta_{\text{Wed}}D_{\text{Wed},t}
++\beta_{\text{Thu}}D_{\text{Thu},t}
++\beta_{\text{Fri}}D_{\text{Fri},t}
++\varepsilon_t
+$$
 where:
 
 Rt = market return on day t
 
-Dj,t --> = 1 if day t corresponds to weekday j,
-     --> = 0 otherwise.
+$$
+D_{j,t} =
+\begin{cases}
+1, & \text{if day } t \text{ corresponds to weekday } j \\
+0, & \text{otherwise}
+\end{cases}
+$$
 
 and βj represents the average daily return for weekday j.
 
@@ -53,23 +66,30 @@ and βj represents the average daily return for weekday j.
 
 A similar specification is estimated using twelve monthly dummy variables:
 
-Rt = βJan	​DJan,t + βFeb DFeb,t + ⋯ + βDec DDec,t + εt
-
-Or, more compactly:     Rt = ∑ βm Dm,t + εt
-
+$$
+R_t = \sum_{m=1}^{12}\beta_m D_{m,t}+\varepsilon_t
+$$
 where:
 
-Dm,t --> = 1 if observation t occurs in month m,
-     --> = 0 otherwise.
+$$
+D_{m,t} =
+\begin{cases}
+1, & \text{if day } t \text{ corresponds to month } m \\
+0, & \text{otherwise}
+\end{cases}
+$$
 
 and βm represents the average daily return during month m.
 
 Each coefficient therefore represents the estimated average daily return for that month.
 
 ### 3. Market Return Construction
-Since the Rm_new is calculated as the row-wise mean of the 15 stock returns, we can also formally show:
-
-Rm,t = 1/N ∑ Ri,t ; with N=15, where Ri,t is the return of stock i on day t.
+Since the Rm_new is calculated as the row-wise mean of the 15 stock returns,the equally weighted market return is constructed as:
+$$
+R_{m,t}=\frac{1}{N}\sum_{i=1}^{N}R_{i,t},
+\qquad N=15
+$$
+where Ri,t is the return of stock i on day t.
 
 This equation is useful because it explains exactly what the dependent variable in this DOW and MOY regressions represents.
 
